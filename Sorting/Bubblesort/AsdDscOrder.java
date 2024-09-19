@@ -27,6 +27,9 @@ public class AsdDscOrder {
             }
         }
 
+        pos = Arrays.copyOfRange(pos, 0, posCount);
+        neg = Arrays.copyOfRange(neg, 0, negCount);
+
         sortAscendingOrder(pos);
         sortDescendingOrder(neg);
 
@@ -36,7 +39,6 @@ public class AsdDscOrder {
         for(int i = 0; i < posCount; i++){
             arr[negCount + i] = pos[i];
         }
-
 
     }
 
