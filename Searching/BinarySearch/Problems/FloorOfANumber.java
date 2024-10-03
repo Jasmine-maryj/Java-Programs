@@ -21,6 +21,6 @@ public class FloorOfANumber {
                 return mid;
             }
         }
-        return start;
+        return end;
     }
 }

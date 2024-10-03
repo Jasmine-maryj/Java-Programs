@@ -1,4 +1,4 @@
-package Searching;
+package Searching.BinarySearch;
 
 public class OABS {
     public static void main(String[] args) {
