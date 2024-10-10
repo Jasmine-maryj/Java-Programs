@@ -1,0 +1,62 @@
+String are immutable in Java.
+New objects are created when we do concatenation or replacement. for example
+
+
+String a = "Jasmine";
+a = "Jasmine John"; //replacement
+String b = "Mary";
+String c = a + b; //concatenation
+
+String objects are stored in **String Pool** for optimization purposes. ****
+
+If we create a String with new keyword, the object will be stored in the heap memory.
+
+If we want to perform some operations which involves concatenation , we can do it efficiently y using StringBuilder or StringBuffer.
+
+## StringBuilder
+
+- For more efficient performance we will use StringBuilder like when doing concatenation.
+- It does not create new objects when when concatenated or replaced.
+- StringBuilder is not thread-safe because it is not synchronous.
+- Internally, it stores the String in char array.
+- It has some default size, it it exceeds then it automatically doubles the size and copy it a new array.
+- Example code
+
+```java
+public class StringBuilder{
+	char[] value;;
+	int size;
+	int cap;
+	
+	public StringBuilder(String str){
+		this.value = new char[str.lenth];
+		this.size = 0;
+		this.cap = str.length;
+	}
+	
+	public void append(String str){
+		if(size + str.length > cap){
+			resize();
+		}
+		for(int i = 0; i < str.length(); i++){
+			value[size++] = str.charAt(i);
+		}
+	}
+	
+	public void resize(){
+		int newCap = capacity * 2;
+		char[] newValue = new char[newCap];
+		System.arraycopy(value, 0, newValue, 0, size);
+		value = newValue;
+		cap = newCap;
+	}
+}
+```
+
+## StringBuffer
+
+- Like StringBuilder, it does not create new objects.
+- Unlike StringBuilder, it is thread-safe and and it performs when in multi-threaded environment
+- It should be used when performance is the second priority, and have to work in multithreaded environment with thread-safe
+- It does not cause any inconsistency.
+- It is slower then StringBuilder
