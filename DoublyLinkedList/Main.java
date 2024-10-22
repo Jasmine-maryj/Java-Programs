@@ -14,5 +14,9 @@ public class Main {
         System.out.println();
         list.insertLast(45);
         list.display();
+
+        System.out.println();
+        list.add(100, 0);
+        list.display();
     }
 }

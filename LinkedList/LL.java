@@ -69,6 +69,169 @@ public class LL {
         size++;
     }
 
+    public void insertRec(int value, int index) {
+        head = insert(index, value, head);
+    }
+
+    // insert using recursion
+    public Node insert(int index, int value, Node node) {
+        if (index == 0) {
+            Node newNode = new Node(value, node);
+            size++;
+            return newNode;
+        }
+
+        node.next = insert(index - 1, value, node.next);
+        return node;
+    }
+
+    public void removeDuplicates() {
+        Node node = head;
+        while (node.next != null) {
+            if (node.value == node.next.value) {
+                node.next = node.next.next;
+                size--;
+            } else {
+                node = node.next;
+            }
+        }
+        tail = node;
+        tail.next = null;
+    }
+
+    public static LL mergeList(LL first, LL second) {
+        Node f = first.head;
+        Node s = second.head;
+
+        LL ans = new LL();
+
+        while (f != null && s != null) {
+            if (f.value < s.value) {
+                ans.addLast(f.value);
+                f = f.next;
+            } else {
+                ans.addLast(s.value);
+                s = s.next;
+            }
+        }
+
+        while (f != null) {
+            ans.addLast(f.value);
+            f = f.next;
+        }
+
+        while (s != null) {
+            ans.addLast(s.value);
+            s = s.next;
+        }
+
+        return ans;
+    }
+
+    public boolean isContainsCycle(Node head) {
+        Node fast = head;
+        Node slow = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int findCycleLength(Node head) {
+        Node fast = head;
+        Node slow = head;
+
+        int cycleLength = 0;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (fast == slow) {
+                // return true;
+                Node temp = slow;
+
+                do {
+                    temp = temp.next;
+                    cycleLength++;
+                } while (temp != slow);
+
+                // while (temp != slow) {
+                // temp = temp.next;
+                // cycleLength++;
+                // }
+                return cycleLength;
+            }
+        }
+        return cycleLength;
+    }
+
+    public Node firstNodeCycle(Node head) {
+        int cycleLength = findCycleLength(head);
+
+        if (cycleLength == 0) {
+            return null;
+        }
+
+        Node f = head;
+        Node s = head;
+
+        while (cycleLength > 0) {
+            s = s.next;
+            cycleLength--;
+        }
+
+        while (f != s) {
+            s = s.next;
+            f = f.next;
+        }
+        return s;
+    }
+
+    public static boolean isHappyNumber(int n) {
+        int slow = n;
+        int fast = n;
+
+        do {
+            slow = findSquare(slow);
+            fast = findSquare(findSquare(fast));
+        } while (slow != fast);
+
+        if (slow == 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public Node findMiddleNode(Node head){
+        Node fast = head;
+        Node slow = head;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    private static int findSquare(int n) {
+        int ans = 0;
+        while (n > 0) {
+            int rem = n % 10;
+            ans += rem * rem;
+            n /= 10;
+        }
+        return ans;
+    }
+
     // deletion in linked list
     public int deleteFirst() {
         int val = head.value;
@@ -94,11 +257,11 @@ public class LL {
         return val;
     }
 
-    public int delete(int index){
-        if(index == 0){
+    public int delete(int index) {
+        if (index == 0) {
             return deleteFirst();
         }
-        if(index == size){
+        if (index == size) {
             return deleteLast();
         }
 
@@ -109,10 +272,10 @@ public class LL {
         return value;
     }
 
-    public Node find(int value){
+    public Node find(int value) {
         Node node = head;
-        while(node != null){
-            if(node.value == value){
+        while (node != null) {
+            if (node.value == value) {
                 return node;
             }
             node = node.next;

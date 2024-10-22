@@ -35,6 +35,34 @@ public class DL {
 
     }
 
+    public void add(int afterValue, int value) {
+        Node node = new Node(value);
+        Node p = find(afterValue);
+        if (p == null) {
+            System.out.println("value does not exists");
+            return;
+        }
+
+        node.next = p.next;
+        p.next = node;
+        node.prev = p;
+        if (node.next != null) {
+            node.next.prev = node;
+        }
+
+    }
+
+    public Node find(int value) {
+        Node node = head;
+        while (node != null) {
+            if (node.value == value) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
     public void display() {
         Node temp = head;
         System.out.print("NULL <- ");
