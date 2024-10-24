@@ -222,6 +222,36 @@ public class LL {
         return slow;
     }
 
+    public void reverseLinkedList(Node node){
+        if(node == tail){
+            head = tail;
+            return;
+        }
+
+        reverseLinkedList(node.next);
+
+        tail.next = node;
+        tail = node;
+        tail.next = null;
+    }
+
+    public void reverseLinkedList1(Node head){
+        Node prev = null;
+        Node present = head;
+        Node next = present.next;
+
+        while(present.next != null){
+            present.next = prev;
+            prev = present;
+            present = next;
+            if(next != null){
+                next = next.next;
+            }
+        }
+
+        head = prev;
+    }
+
     private static int findSquare(int n) {
         int ans = 0;
         while (n > 0) {
