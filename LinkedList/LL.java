@@ -210,11 +210,11 @@ public class LL {
         return false;
     }
 
-    public Node findMiddleNode(Node head){
+    public Node findMiddleNode(Node head) {
         Node fast = head;
         Node slow = head;
 
-        while(fast != null && fast.next != null){
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
@@ -222,8 +222,8 @@ public class LL {
         return slow;
     }
 
-    public void reverseLinkedList(Node node){
-        if(node == tail){
+    public void reverseLinkedList(Node node) {
+        if (node == tail) {
             head = tail;
             return;
         }
@@ -235,12 +235,41 @@ public class LL {
         tail.next = null;
     }
 
-    public void reverseLinkedList1(Node head){
+    public void reverseLinkedList1(Node head) {
         Node prev = null;
         Node present = head;
         Node next = present.next;
 
-        while(present.next != null){
+        while (present.next != null) {
+            present.next = prev;
+            prev = present;
+            present = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+
+        head = prev;
+    }
+
+    public Node reverseInBetween(Node head, int left, int right){
+        if(left == right){
+            return head;
+        }
+
+        Node last = null;
+        Node present = head;
+
+        for(int i = 0; present != null && i < left - 1; i++){
+            last = present;
+            present = present.next;
+        }
+
+        Node prev = last;
+        Node newEnd = present;
+        Node next = present.next;
+
+        for(int i = 0; present != null && i < right - left + 1; i++){
             present.next = prev;
             prev = present;
             present = next;
@@ -249,7 +278,14 @@ public class LL {
             }
         }
 
-        head = prev;
+        if(last != null){
+            last.next  = prev;
+        }else{
+            head = prev;
+        }
+
+        newEnd.next =  present;
+        return head;
     }
 
     private static int findSquare(int n) {
