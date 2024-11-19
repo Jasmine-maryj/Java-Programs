@@ -259,7 +259,6 @@ public class LL {
 
         Node last = null;
         Node present = head;
-
         for(int i = 0; present != null && i < left - 1; i++){
             last = present;
             present = present.next;
